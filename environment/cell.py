@@ -2,7 +2,7 @@ class Cell:
     """ Class for making a peg solitaire piece which is a Cell object"""
     def __init__(self, row, column):
         self.location = (row, column)
-        self.name = "Cell" + str(row) + str(column)  # change to piece color
+        self.name = "Cell" + str(row) + str(column)
         self.neighbor_list = []
         self.is_hole = False
 
