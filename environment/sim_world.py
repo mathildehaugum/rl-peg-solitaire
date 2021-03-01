@@ -1,6 +1,5 @@
-from peg_board import *
-from peg_player import PegPlayer
-from visualization import Visualizer
+from environment.peg_player import PegPlayer
+from environment.peg_board import *
 
 
 class SimWorld:
@@ -45,43 +44,48 @@ class SimWorld:
          where each tuple is a combination of a moving cell, a jumping cell and an empty cell"""
         legal_actions = []
         for current_hole in self.board.get_holes():  # Looks at all hole cells in current board
+            hole_row, hole_col = current_hole.get_location()
             hole_neighbors = current_hole.get_neighbors()
             for hole_neighbor in hole_neighbors:  # Checks if hole cell has neighbors that can be jumped over
+                neigh_row, neigh_col = hole_neighbor.get_location()
                 if not hole_neighbor.get_is_hole():
                     jumping_neighbors = hole_neighbor.get_neighbors()
                     for jumping_neighbor in jumping_neighbors:  # Checks if jumping cell has neighbors that can jump
+                        jump_row, jump_col = jumping_neighbor.get_location()
                         if not jumping_neighbor.get_is_hole():
-                            legal_actions.append((jumping_neighbor, hole_neighbor, current_hole))
+                            if (jump_row == neigh_row == hole_row) or (jump_col == neigh_col == hole_col) or \
+                                    ((abs(hole_row-jump_row) == 2) and (abs(hole_col-jump_col) == 2)):
+                                legal_actions.append((jumping_neighbor, hole_neighbor, current_hole))
         return legal_actions
 
     def get_reward(self):
         """ Returns the reward of being in the current board state"""
         reward = 0
-        if self.is_winning_state():
-            reward += 100
-        elif self.is_losing_state():
+        if self.is_losing_state():
             reward -= self.board.get_cell_nums()[0]
+        elif self.is_winning_state():
+            reward += 1000
         return reward
 
 
-if __name__ == '__main__':
-    init_holes = [(1, 0), (0, 1)]
-    diamond = True
-    board_size = 3
-    sim_world = SimWorld(board_size, diamond, init_holes)
+# if __name__ == '__main__':
+#    init_holes = [(1, 0), (0, 1)]
+#    diamond = True
+#    board_size = 3
+#    sim_world = SimWorld(board_size, diamond, init_holes)
 
-    move_cell = sim_world.get_board().get_cell(0, 2)
-    jump_cell = sim_world.get_board().get_cell(1, 1)
-    hole_cell = sim_world.get_board().get_cell(1, 0)
-    action1 = (move_cell, jump_cell, hole_cell)
-    move_cell = sim_world.get_board().get_cell(2, 2)
-    jump_cell = sim_world.get_board().get_cell(1, 2)
-    hole_cell = sim_world.get_board().get_cell(0, 2)
-    action2 = (move_cell, jump_cell, hole_cell)
-    new_episode = [("state1", action1), ("state2", action2)]
-    visualizer = Visualizer(sim_world.get_board(), sim_world.get_player())
-    visualizer.visualize_episode(new_episode)
-    sim_world.get_player().stringify_action(action2)
+#    move_cell = sim_world.get_board().get_cell(0, 2)
+#    jump_cell = sim_world.get_board().get_cell(1, 1)
+#    hole_cell = sim_world.get_board().get_cell(1, 0)
+#    action1 = (move_cell, jump_cell, hole_cell)
+#    move_cell = sim_world.get_board().get_cell(2, 2)
+#    jump_cell = sim_world.get_board().get_cell(1, 2)
+#    hole_cell = sim_world.get_board().get_cell(0, 2)
+#    action2 = (move_cell, jump_cell, hole_cell)
+#    new_episode = [("state1", action1), ("state2", action2)]
+#    visualizer = Visualizer(sim_world.get_board(), sim_world.get_player())
+#    visualizer.visualize_episode(new_episode)
+#    sim_world.get_player().stringify_action(action2)
 
 
 
