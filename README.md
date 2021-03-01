@@ -7,7 +7,7 @@ For a complete description of the game, see [Wikipedia](https://en.wikipedia.org
 
 The main file initiates the agent and the environment and consists of pivot parameter values used to solve specied problems in the project description. The figures below show an example of the learning plot for one of the learning processes and the visualization of the final episode of this process.
 
-Visualization of last epiosde           |  Learning plot
+Visualization of last episode           |  Learning plot
 :-------------------------:|:-------------------------:
 ![image](images/animation.gif) |  ![image](images/learning_plot.png)
 
