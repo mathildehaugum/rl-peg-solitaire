@@ -11,10 +11,3 @@ class PegPlayer:
             jumping_cell.set_is_hole(True)  # Jumping cell becomes a hole because its removed
             hole_cell.set_is_hole(False)  # Hole cell becomes a peg, since moving cell jumps "into" it
 
-    def stringify_action(self, action):
-        """ Returns readable version of action on
-        format (movingCell-jumpingCell-empty cell for debugging """
-        action_string = ""
-        if len(action) == 3:
-            action_string = str(action[0]) + "-" + str(action[1]) + "-" + str(action[2])
-        return action_string
