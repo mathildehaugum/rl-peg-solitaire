@@ -8,7 +8,7 @@ An RL system consists of an agent and an environment, where the agent houses all
 
 High-level view of system           |  Generic Actor Critic Algorithm
 :-------------------------:|:-------------------------:
-![Actor-Critic Reinforcement Learner system](images/ac-model.png | width=100)  |  ![Actor-Critic Reinforcement Learner system](images/ac-algorithm.png)
+![Actor-Critic Reinforcement Learner system](images/ac-model.png)  |  ![Actor-Critic Reinforcement Learner system](images/ac-algorithm.png)
 
 
 The main file consists of pivot parameter values used to solve specied problems in the project description. The figures below shows the learning plot for the entire learning process and the visualization of the final episode. 
