@@ -1,11 +1,13 @@
-from cell import Cell
+from environment.cell import Cell
 
 
 class HexagonalGrid:
     """ Class for making a peg solitaire board which is a Hexagonal grid """
-    def __init__(self, size):
+    def __init__(self, size, holes):
         self.boardSize = size
         self.board = [[None for i in range(self.boardSize)] for j in range(self.boardSize)]
+        self.holes = holes
+        self.init_holes(self.holes)
 
     def get_cell(self, row, col):
         """ Returns Cell object at given location if it exists """
@@ -54,6 +56,7 @@ class HexagonalGrid:
         cell_list = self.get_cells()
         for current_cell in cell_list:
             current_cell.set_is_hole(False)
+        self.init_holes(self.holes)
 
     def init_holes(self, holes):
         """ Create initial board state by placing initial given holes """
@@ -75,9 +78,8 @@ class HexagonalGrid:
 class DiamondGrid (HexagonalGrid):
     """ Subclass for creating Diamond shaped Hexagonal grid"""
     def __init__(self, size, holes):
-        super().__init__(size)
+        super().__init__(size, holes)
         self.make_diamond_board()
-        self.init_holes(holes)
 
     def make_diamond_board(self):
         """ Fills diamond board with Cell objects and creates neighborhood following Diamond structure requirements"""
@@ -96,9 +98,8 @@ class DiamondGrid (HexagonalGrid):
 class TriangleGrid (HexagonalGrid):
     """ Subclass for creating Triangle shaped Hexagonal grid"""
     def __init__(self, size, holes):
-        super().__init__(size)
+        super().__init__(size, holes)
         self.make_triangle_board()
-        self.init_holes(holes)
 
     def make_triangle_board(self):
         """ Fills triangle board with Cell objects and creates neighborhood following triangle structure requirements"""
